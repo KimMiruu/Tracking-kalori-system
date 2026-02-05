@@ -1,0 +1,13 @@
+{
+  "[javascript]": {
+    "editor.formatOnSave": false,
+    "editor.defaultFormatter": "numso.prettier-standard-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.formatOnSave": false,
+    "editor.defaultFormatter": "numso.prettier-standard-vscode"
+  },
+  "prettier.enable": false,
+  "eslint.enable": false,
+  "editor.defaultFormatter": null
+}
