@@ -478,12 +478,20 @@ export async function POST(req) {
         var mlNames = [];
 
         try {
+            var goalEncMap = { naik_otot: 2, jaga_berat: 0, turun_berat: 1 };
+            var goalEnc = goalEncMap[goal] ?? 0;
+            var mealEncMap = { breakfast: 0, lunch: 1, dinner: 2, snack: 3 };
+            var mealEnc = mealEncMap[meal] ?? 0;
+
             var mlRes = await fetch(ML_API + "/predict", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     remaining_calories: sisaKalori,
-                    goal: goal, // dikirim juga ke ML service kalau modelnya mau pakai
+                    goal_enc: goalEnc,
+                    meal_enc: mealEnc,
+                    vegetarian: 0,
+                    high_protein: 0,
                     top_n: 50,
                 }),
             });
@@ -672,48 +680,77 @@ export async function POST(req) {
          * goal + ML + belum-pernah-dimakan), bukan urutan acak
          * total seperti sebelumnya.
          *
-         * DUA TAHAP (soft-exclude untuk riwayat tracking):
+         * TIGA TAHAP (soft-exclude untuk riwayat tracking):
          * 1. Isi rekomendasi HANYA dari makanan yang belum pernah
          *    ditrack user (everEaten === false) selama kalori cukup.
-         * 2. Kalau setelah tahap 1 jumlah rekomendasi masih < 5
-         *    (artinya pool makanan baru tidak cukup), baru isi sisa
-         *    slot dari makanan yang pernah ditrack (everEaten === true),
-         *    tetap diutamakan yang skornya tertinggi di antara mereka.
+         * 2. Kalau setelah tahap 1 jumlah rekomendasi masih kurang,
+         *    baru isi sisa slot dari makanan yang pernah ditrack
+         *    (everEaten === true).
+         * 3. Top-up: kalau kalori masih tersisa >200 kcal, longgarkan
+         *    toleransi (1.5x) untuk mengisi lebih penuh.
+         *
+         * Dinamis maxItems = max(5, ceil(sisaKalori / 150))
+         * supaya makin besar budget makin banyak item yang bisa dipilih.
+         * Toleransi overrun 10% seperti Python knapsack.
          *
          * Karena finalPool sudah di-sort berdasarkan score (dan
          * everEaten sudah kena penalti besar saat scoring), secara
          * alami makanan belum-pernah-dimakan akan duluan dipilih di
-         * tahap 1 tanpa perlu sorting ulang. Tahap 2 hanya jaring
+         * tahap 1 tanpa perlu sorting ulang. Tahap 2-3 hanya jaring
          * pengaman kalau tahap 1 belum cukup.
          */
         var recommendations = [];
         var remaining = sisaKalori;
+
+        var maxItems = Math.max(5, Math.ceil(sisaKalori / 150));
+        var TOLERANCE = 1.1;
 
         // Tahap 1: utamakan makanan yang belum pernah ditrack
         for (var i = 0; i < finalPool.length; i++) {
             var food = finalPool[i];
             if (food.everEaten) continue;
 
-            if (recommendations.length >= 5) break;
+            if (recommendations.length >= maxItems) break;
 
-            if (food.kalori <= remaining) {
+            if (food.kalori <= remaining * TOLERANCE) {
                 recommendations.push(food);
                 remaining -= food.kalori;
             }
         }
 
         // Tahap 2: fallback ke makanan yang pernah ditrack, hanya jika
-        // tahap 1 belum mencukupi 5 rekomendasi
-        if (recommendations.length < 5) {
+        // tahap 1 belum mencukupi rekomendasi
+        if (recommendations.length < maxItems) {
             for (var i = 0; i < finalPool.length; i++) {
                 var food = finalPool[i];
                 if (!food.everEaten) continue;
 
-                if (recommendations.length >= 5) break;
+                if (recommendations.length >= maxItems) break;
 
-                if (food.kalori <= remaining) {
+                if (food.kalori <= remaining * TOLERANCE) {
                     recommendations.push(food);
                     remaining -= food.kalori;
+                }
+            }
+        }
+
+        // Tahap 3 (top-up): kalau kalori masih banyak tersisa,
+        // longgarkan toleransi untuk mengisi lebih penuh
+        if (remaining > 200 && recommendations.length < maxItems) {
+            var pickedSet = new Set();
+            for (var k = 0; k < recommendations.length; k++) {
+                pickedSet.add(normalizeStrict(recommendations[k].name));
+            }
+
+            for (var i = 0; i < finalPool.length; i++) {
+                var food = finalPool[i];
+                if (recommendations.length >= maxItems) break;
+                if (pickedSet.has(normalizeStrict(food.name))) continue;
+
+                if (food.kalori <= remaining * 1.5) {
+                    recommendations.push(food);
+                    remaining -= food.kalori;
+                    pickedSet.add(normalizeStrict(food.name));
                 }
             }
         }
