@@ -102,21 +102,11 @@ export default function LandingPage() {
             <span style={styles.logoText}>SimpleFit</span>
           </div>
           <div style={styles.navLinks}>
-            <a href="#features" style={styles.navLink}>
-              Fitur
-            </a>
-            <a href="#testimonials" style={styles.navLink}>
-              Testimoni
-            </a>
-            <a href="#pricing" style={styles.navLink}>
-              Harga
-            </a>
-            <Link href="/login" style={styles.navLink}>
-              Masuk
-            </Link>
-            <Link href="/register" style={styles.ctaButton}>
-              Daftar Gratis
-            </Link>
+            <a href="#features" style={styles.navLink}>Fitur</a>
+            <a href="#testimonials" style={styles.navLink}>Testimoni</a>
+            <a href="#pricing" style={styles.navLink}>Harga</a>
+            <Link href="/login" style={styles.navLink}>Masuk</Link>
+            <Link href="/register" style={styles.ctaButton}>Daftar Gratis</Link>
           </div>
         </div>
       </nav>
@@ -135,14 +125,13 @@ export default function LandingPage() {
               Transformasi Tubuh Anda
               <span style={styles.gradientText}> Dengan SimpleFit</span>
             </h1>
-            <p style={styles.heroDescription}>Platform fitness all-in-one untuk membantu Anda mencapai tujuan kebugaran. Dari tracking workout hingga panduan nutrisi, semua dalam satu aplikasi.</p>
+            <p style={styles.heroDescription}>
+              Platform fitness all-in-one untuk membantu Anda mencapai tujuan kebugaran.
+              Dari tracking workout hingga panduan nutrisi, semua dalam satu aplikasi.
+            </p>
             <div style={styles.heroButtons}>
-              <Link href="/register" style={styles.primaryButton}>
-                Mulai Sekarang
-              </Link>
-              <a href="#features" style={styles.secondaryButton}>
-                Pelajari Lebih Lanjut
-              </a>
+              <Link href="/register" style={styles.primaryButton}>Mulai Sekarang</Link>
+              <a href="#features" style={styles.secondaryButton}>Pelajari Lebih Lanjut</a>
             </div>
             <div style={styles.stats}>
               <div style={styles.stat}>
@@ -159,6 +148,8 @@ export default function LandingPage() {
               </div>
             </div>
           </div>
+
+          {/* Hero Image */}
           <div
             style={{
               ...styles.heroImage,
@@ -167,23 +158,35 @@ export default function LandingPage() {
             }}
           >
             <div style={styles.imagePlaceholder}>
-              <div style={styles.floatingCard}>
-                <div style={styles.cardIcon}>🏃</div>
-                <div style={styles.cardText}>
-                  <div style={styles.cardTitle}>Workout Completed</div>
-                  <div style={styles.cardSubtitle}>45 minutes • 320 kcal</div>
-                </div>
+              <img
+                src="/images/hero-image.jpg"
+                alt="Healthy food and workout lifestyle"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  borderRadius: "20px",
+                  display: "block",
+                }}
+              />
+            </div>
+            <div style={styles.floatingCard}>
+              <div style={styles.cardIcon}>🏃</div>
+              <div style={styles.cardText}>
+                <div style={styles.cardTitle}>Workout Completed</div>
+                <div style={styles.cardSubtitle}>45 minutes • 320 kcal</div>
               </div>
-              <div style={styles.floatingCard2}>
-                <div style={styles.cardIcon}>📈</div>
-                <div style={styles.cardText}>
-                  <div style={styles.cardTitle}>Progress +15%</div>
-                  <div style={styles.cardSubtitle}>This week</div>
-                </div>
+            </div>
+            <div style={styles.floatingCard2}>
+              <div style={styles.cardIcon}>📈</div>
+              <div style={styles.cardText}>
+                <div style={styles.cardTitle}>Progress +15%</div>
+                <div style={styles.cardSubtitle}>This week</div>
               </div>
             </div>
           </div>
         </div>
+
         <div style={styles.scrollIndicator}>
           <div style={styles.scrollArrow}></div>
         </div>
@@ -265,12 +268,10 @@ export default function LandingPage() {
                 <li style={styles.pricingFeature}>✓ Workout Tracking</li>
                 <li style={styles.pricingFeature}>✓ Basic Nutrition Guide</li>
                 <li style={styles.pricingFeature}>✓ Community Access</li>
-                <li style={styles.pricingFeature}>✗ Personalized Plans</li>
-                <li style={styles.pricingFeature}>✗ Advanced Analytics</li>
+                <li style={{ ...styles.pricingFeature, color: "#9ca3af" }}>✗ Personalized Plans</li>
+                <li style={{ ...styles.pricingFeature, color: "#9ca3af" }}>✗ Advanced Analytics</li>
               </ul>
-              <Link href="/register" style={styles.pricingButton}>
-                Mulai Gratis
-              </Link>
+              <Link href="/register" style={styles.pricingButton}>Mulai Gratis</Link>
             </div>
 
             <div style={styles.pricingCardFeatured} className="pricing-card-featured">
@@ -289,9 +290,7 @@ export default function LandingPage() {
                 <li style={styles.pricingFeature}>✓ Progress Analytics</li>
                 <li style={styles.pricingFeature}>✓ Priority Support</li>
               </ul>
-              <Link href="/register" style={styles.pricingButtonFeatured}>
-                Daftar Sekarang
-              </Link>
+              <Link href="/register" style={styles.pricingButtonFeatured}>Daftar Sekarang</Link>
             </div>
 
             <div style={styles.pricingCard} className="pricing-card">
@@ -309,9 +308,7 @@ export default function LandingPage() {
                 <li style={styles.pricingFeature}>✓ Video Call Support</li>
                 <li style={styles.pricingFeature}>✓ Early Feature Access</li>
               </ul>
-              <Link href="/register" style={styles.pricingButton}>
-                Pilih Premium
-              </Link>
+              <Link href="/register" style={styles.pricingButton}>Pilih Premium</Link>
             </div>
           </div>
         </div>
@@ -323,12 +320,8 @@ export default function LandingPage() {
           <h2 style={styles.ctaTitle}>Siap Transformasi Tubuh Anda?</h2>
           <p style={styles.ctaDescription}>Bergabung dengan ribuan orang yang sudah merasakan manfaat SimpleFit</p>
           <div style={styles.ctaButtons}>
-            <Link href="/register" style={styles.primaryButtonLarge}>
-              Daftar Sekarang - Gratis
-            </Link>
-            <Link href="/login" style={styles.secondaryButtonLarge}>
-              Masuk Akun
-            </Link>
+            <Link href="/register" style={styles.primaryButtonLarge}>Daftar Sekarang - Gratis</Link>
+            <Link href="/login" style={styles.secondaryButtonLarge}>Masuk Akun</Link>
           </div>
         </div>
       </section>
@@ -351,59 +344,38 @@ export default function LandingPage() {
                 </div>
                 <span style={styles.logoText}>SimpleFit</span>
               </div>
-              <p style={styles.footerDescription}>Platform fitness terdepan untuk membantu Anda mencapai tujuan kebugaran dengan cara yang menyenangkan dan efektif.</p>
+              <p style={styles.footerDescription}>
+                Platform fitness terdepan untuk membantu Anda mencapai tujuan kebugaran
+                dengan cara yang menyenangkan dan efektif.
+              </p>
             </div>
             <div style={styles.footerLinks}>
               <div style={styles.footerColumn}>
                 <h4 style={styles.footerTitle}>Product</h4>
-                <a href="#features" style={styles.footerLink}>
-                  Fitur
-                </a>
-                <a href="#pricing" style={styles.footerLink}>
-                  Harga
-                </a>
-                <a href="#testimonials" style={styles.footerLink}>
-                  Testimoni
-                </a>
+                <a href="#features" style={styles.footerLink}>Fitur</a>
+                <a href="#pricing" style={styles.footerLink}>Harga</a>
+                <a href="#testimonials" style={styles.footerLink}>Testimoni</a>
               </div>
               <div style={styles.footerColumn}>
                 <h4 style={styles.footerTitle}>Company</h4>
-                <a href="#" style={styles.footerLink}>
-                  Tentang Kami
-                </a>
-                <a href="#" style={styles.footerLink}>
-                  Blog
-                </a>
-                <a href="#" style={styles.footerLink}>
-                  Karir
-                </a>
+                <a href="#" style={styles.footerLink}>Tentang Kami</a>
+                <a href="#" style={styles.footerLink}>Blog</a>
+                <a href="#" style={styles.footerLink}>Karir</a>
               </div>
               <div style={styles.footerColumn}>
                 <h4 style={styles.footerTitle}>Support</h4>
-                <a href="#" style={styles.footerLink}>
-                  Bantuan
-                </a>
-                <a href="#" style={styles.footerLink}>
-                  Kontak
-                </a>
-                <a href="#" style={styles.footerLink}>
-                  Privacy Policy
-                </a>
+                <a href="#" style={styles.footerLink}>Bantuan</a>
+                <a href="#" style={styles.footerLink}>Kontak</a>
+                <a href="#" style={styles.footerLink}>Privacy Policy</a>
               </div>
             </div>
           </div>
           <div style={styles.footerBottom}>
             <div style={styles.copyright}>© 2024 SimpleFit. All rights reserved.</div>
             <div style={styles.socialLinks}>
-              <a href="#" style={styles.socialLink}>
-                Twitter
-              </a>
-              <a href="#" style={styles.socialLink}>
-                Facebook
-              </a>
-              <a href="#" style={styles.socialLink}>
-                Instagram
-              </a>
+              <a href="#" style={styles.socialLink}>Twitter</a>
+              <a href="#" style={styles.socialLink}>Facebook</a>
+              <a href="#" style={styles.socialLink}>Instagram</a>
             </div>
           </div>
         </div>
@@ -489,7 +461,6 @@ const styles = {
     textDecoration: "none",
     fontWeight: "600",
     transition: "all 0.3s ease",
-    transform: "translateY(0)",
   },
   hero: {
     minHeight: "100vh",
@@ -550,7 +521,6 @@ const styles = {
     fontSize: "1.1rem",
     transition: "all 0.3s ease",
     display: "inline-block",
-    transform: "translateY(0)",
   },
   secondaryButton: {
     backgroundColor: "transparent",
@@ -563,7 +533,6 @@ const styles = {
     border: "2px solid white",
     transition: "all 0.3s ease",
     display: "inline-block",
-    transform: "translateY(0)",
   },
   stats: {
     display: "flex",
@@ -591,39 +560,40 @@ const styles = {
   imagePlaceholder: {
     width: "100%",
     height: "400px",
-    backgroundColor: "rgba(255, 255, 255, 0.1)",
     borderRadius: "20px",
-    backdropFilter: "blur(10px)",
-    border: "1px solid rgba(255, 255, 255, 0.2)",
     position: "relative",
+    overflow: "hidden",
+    boxShadow: "0 30px 60px rgba(0, 0, 0, 0.2)",
   },
   floatingCard: {
     position: "absolute",
-    top: "20%",
-    left: "-10%",
+    top: "15%",
+    left: "-8%",
     backgroundColor: "white",
-    padding: "1rem",
+    padding: "0.875rem 1rem",
     borderRadius: "12px",
     boxShadow: "0 20px 40px rgba(0, 0, 0, 0.15)",
     display: "flex",
     alignItems: "center",
-    gap: "1rem",
-    minWidth: "200px",
+    gap: "0.75rem",
+    minWidth: "190px",
     animation: "float 6s ease-in-out infinite",
+    zIndex: 10,
   },
   floatingCard2: {
     position: "absolute",
-    bottom: "20%",
-    right: "-10%",
+    bottom: "15%",
+    right: "-8%",
     backgroundColor: "white",
-    padding: "1rem",
+    padding: "0.875rem 1rem",
     borderRadius: "12px",
     boxShadow: "0 20px 40px rgba(0, 0, 0, 0.15)",
     display: "flex",
     alignItems: "center",
-    gap: "1rem",
-    minWidth: "200px",
+    gap: "0.75rem",
+    minWidth: "190px",
     animation: "float 6s ease-in-out infinite 2s",
+    zIndex: 10,
   },
   cardIcon: {
     fontSize: "2rem",
@@ -700,7 +670,6 @@ const styles = {
   featureIcon: {
     fontSize: "3rem",
     marginBottom: "1rem",
-    transition: "transform 0.3s ease",
   },
   featureTitle: {
     fontSize: "1.5rem",
@@ -742,6 +711,7 @@ const styles = {
   testimonialAvatar: {
     fontSize: "2rem",
   },
+  testimonialInfo: {},
   testimonialName: {
     fontWeight: "600",
     color: "#1f2937",
@@ -880,7 +850,6 @@ const styles = {
     fontWeight: "600",
     fontSize: "1.1rem",
     transition: "all 0.3s ease",
-    transform: "translateY(0)",
   },
   secondaryButtonLarge: {
     backgroundColor: "transparent",
@@ -892,7 +861,6 @@ const styles = {
     fontSize: "1.1rem",
     border: "2px solid white",
     transition: "all 0.3s ease",
-    transform: "translateY(0)",
   },
   footer: {
     backgroundColor: "#1f2937",
@@ -961,193 +929,39 @@ const styles = {
 
 const stylesheet = `
   @keyframes float {
-    0%, 100% { 
-      transform: translateY(0px) rotate(0deg); 
-    }
-    50% { 
-      transform: translateY(-20px) rotate(5deg); 
-    }
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
   }
   
   @keyframes bounce {
-    0%, 20%, 50%, 80%, 100% { 
-      transform: translateY(0) rotate(45deg); 
-    }
-    40% { 
-      transform: translateY(-10px) rotate(45deg); 
-    }
-    60% { 
-      transform: translateY(-5px) rotate(45deg); 
-    }
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0) rotate(45deg); }
+    40% { transform: translateY(-10px) rotate(45deg); }
+    60% { transform: translateY(-5px) rotate(45deg); }
   }
 
   @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
-  @keyframes pulse {
-    0%, 100% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.05);
-    }
-  }
-
-  @keyframes slideInLeft {
-    from {
-      opacity: 0;
-      transform: translateX(-50px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-
-  @keyframes slideInRight {
-    from {
-      opacity: 0;
-      transform: translateX(50px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-
-  * {
-    box-sizing: border-box;
-  }
-
-  html {
-    scroll-behavior: smooth;
-  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
 
   .feature-card:hover {
     transform: translateY(-10px) scale(1.02);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
   }
-
-  .feature-card:hover .feature-icon {
-    transform: scale(1.2) rotate(5deg);
-  }
-
-  .primary-button:hover, .primary-button-large:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 15px 30px rgba(255, 255, 255, 0.4);
-  }
-
-  .secondary-button:hover, .secondary-button-large:hover {
-    background-color: white;
-    color: #247ba0;
-    transform: translateY(-3px);
-    box-shadow: 0 15px 30px rgba(255, 255, 255, 0.2);
-  }
-
-  .pricing-button:hover {
-    background-color: #247ba0;
-    color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(36, 123, 160, 0.3);
-  }
-
-  .pricing-button-featured:hover {
-    background-color: #1a5a7a;
-    transform: translateY(-2px);
-    box-shadow: 0 15px 30px rgba(36, 123, 160, 0.4);
-  }
-
-  .pricing-card-featured:hover {
-    transform: scale(1.08);
-    box-shadow: 0 20px 50px rgba(36, 123, 160, 0.25);
-  }
-
-  .pricing-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-  }
-
   .testimonial-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
   }
-
-  .nav-link:hover {
-    color: #70c1b3;
-    transform: translateY(-2px);
+  .pricing-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
   }
-
-  .nav-link:hover::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(135deg, #70c1b3 0%, #247ba0 100%);
-    animation: slideInLeft 0.3s ease;
-  }
-
-  .footer-link:hover, .social-link:hover {
-    color: #70c1b3;
-    transform: translateX(5px);
-  }
-
-  .cta-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 15px 30px rgba(255, 255, 255, 0.3);
-  }
-
-  input:focus {
-    outline: none;
-    border-color: #70c1b3 !important;
-    box-shadow: 0 0 0 3px rgba(112, 193, 179, 0.1);
-    transform: scale(1.02);
-  }
-
-  .feature-card, .testimonial-card, .pricing-card {
-    animation-fill-mode: both;
-  }
-
-  .cta-section {
-    background: linear-gradient(-45deg, #a8e6cf, #70c1b3, #247ba0, #1a5a7a);
-    background-size: 400% 400%;
-    animation: gradientShift 15s ease infinite;
-  }
-
-  @keyframes gradientShift {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-
-  .stat-number {
-    animation: countUp 2s ease-out;
-  }
-
-  @keyframes countUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  .pricing-card-featured:hover {
+    transform: scale(1.08);
+    box-shadow: 0 20px 50px rgba(36, 123, 160, 0.25);
   }
 `;
 
