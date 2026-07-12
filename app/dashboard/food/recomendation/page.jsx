@@ -516,6 +516,79 @@ function RecipeModal({ open, data, onClose, onAdd }) {
   return createPortal(modal, document.body)
 }
 
+function EmptyRecommendationModal({ open, onClose }) {
+  if (!open) return null
+  if (typeof document === 'undefined') return null
+
+  const modal = (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      style={{
+        position: 'fixed', inset: 0,
+        background: 'rgba(15,23,42,0.55)',
+        backdropFilter: 'blur(10px)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        zIndex: 99999,
+      }}
+    >
+      <motion.div
+        initial={{ opacity: 0, scale: 0.85, y: 30 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.85, y: 30 }}
+        transition={{ type: 'spring', damping: 22, stiffness: 280 }}
+        style={{
+          width: 'min(440px, 92%)',
+          background: 'linear-gradient(180deg, #ffffff, #f8fafc)',
+          borderRadius: 24,
+          padding: '40px 32px',
+          textAlign: 'center',
+          boxShadow: '0 30px 80px rgba(15,23,42,0.4)',
+          fontFamily: '"Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+        }}
+      >
+        <div style={{
+          width: 72, height: 72, borderRadius: '50%',
+          background: 'linear-gradient(135deg, #fef3c7, #f59e0b)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          fontSize: 34, margin: '0 auto 22px',
+          boxShadow: '0 14px 36px rgba(245,158,11,0.35)',
+        }}>
+          🎉
+        </div>
+        <h3 style={{
+          margin: '0 0 12px', fontSize: 20, fontWeight: 900,
+          color: '#0f172a', letterSpacing: '-0.3px',
+        }}>
+          Rekomendasi Habis!
+        </h3>
+        <p style={{
+          margin: '0 0 28px', fontSize: 14, color: '#475569',
+          lineHeight: 1.7,
+        }}>
+          Wah, rekomendasi hari ini sudah habis!<br />
+          Semua menu sudah kamu catat. Kembali besok ya~
+        </p>
+        <button
+          onClick={onClose}
+          style={{
+            background: 'linear-gradient(135deg, #70c1b3, #247ba0)',
+            color: '#fff', border: 'none', borderRadius: 14,
+            padding: '13px 40px', fontWeight: 800, fontSize: 14,
+            cursor: 'pointer',
+            boxShadow: '0 8px 24px rgba(36,123,160,0.35)',
+          }}
+        >
+          Oke, Siap!
+        </button>
+      </motion.div>
+    </motion.div>
+  )
+
+  return createPortal(modal, document.body)
+}
+
 function PrefChip({ active, label, onClick }) {
   return (
     <button
@@ -652,6 +725,7 @@ export default function FoodRecommendationPage() {
   const [combinedFoods, setCombinedFoods] = useState([]);
   const [openRecipe, setOpenRecipe] = useState(null);
   const [addingBundleId, setAddingBundleId] = useState(null);
+  const [showEmptyPopup, setShowEmptyPopup] = useState(false);
 
   const LOW_BUDGET_THRESHOLD = 300;
   const isLowBudget =
@@ -869,6 +943,20 @@ export default function FoodRecommendationPage() {
 
     fetchRecommendations()
   }, [sisaKalori, combinedFoods, isLowBudget, goal, preferences])
+
+  // Detect when all recommendations are exhausted
+  useEffect(() => {
+    if (loadingServerRec) return;
+    if (serverRecommendations.sarapan === null) return;
+
+    var allEmpty = ['sarapan', 'makan_siang', 'makan_malam', 'camilan'].every(function (key) {
+      var rec = serverRecommendations[key];
+      return rec && Array.isArray(rec.foods) && rec.foods.length === 0;
+    });
+    if (allEmpty) {
+      setShowEmptyPopup(true);
+    }
+  }, [serverRecommendations, loadingServerRec]);
 
   function accentColorFor(key) { return accent[key] ?? brand.purple }
 
@@ -1419,6 +1507,14 @@ export default function FoodRecommendationPage() {
         </div>
 
         <RecipeModal open={!!openRecipe} data={openRecipe} onClose={() => setOpenRecipe(null)} onAdd={handleAddToTracking} />
+        <AnimatePresence>
+          {showEmptyPopup && (
+            <EmptyRecommendationModal
+              open={showEmptyPopup}
+              onClose={() => setShowEmptyPopup(false)}
+            />
+          )}
+        </AnimatePresence>
       </div>
     </div>
   )
